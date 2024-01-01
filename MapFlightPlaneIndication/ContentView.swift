@@ -9,17 +9,26 @@ import SwiftUI
 import MapKit
 
 struct ContentView: View {
+    @State private var cameraPosition: MapCameraPosition = .camera(
+        MapCamera(
+            centerCoordinate: .init(latitude: 22.176310, longitude:-41.176251),
+            distance: .infinity
+        )
+    )
+
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                Map {
+                Map(
+                    position: $cameraPosition
+                ) {
                     Annotation("Orly airport", coordinate: .orlyAirport) {
                         Image(systemName: "airplane")
-                            .font(.system(size: 40))
+                            .font(.system(size: 20))
+                            .rotationEffect(.degrees(200))
                     }
                     .annotationTitles(.hidden)
                 }
-
                 FlightInformationsView()
                 .padding()
                 .background(.thinMaterial)
@@ -28,13 +37,11 @@ struct ContentView: View {
         .ignoresSafeArea()
     }
 }
-extension CLLocationCoordinate2D {
-    static let orlyAirport = CLLocationCoordinate2D(latitude: 48.7262433, longitude: 2.365247199999999)
-    static let empireStateBuilding = CLLocationCoordinate2D(latitude: 40.7484, longitude: -73.9857)
-    static let columbiaUniversity = CLLocationCoordinate2D(latitude: 40.8075, longitude: -73.9626)
-}
 
 #Preview {
     ContentView()
 }
 
+extension CLLocationCoordinate2D {
+    static let orlyAirport = CLLocationCoordinate2D(latitude: 48.7262433, longitude: 2.365247199999999)
+}
