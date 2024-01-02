@@ -13,12 +13,13 @@ struct ContentView: View {
         MapCamera(
             centerCoordinate: .init(latitude: 22.176310, longitude:-41.176251),
             distance: .infinity
-        )
+            )
     )
+
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottom) {
+            VStack(alignment: .center, spacing: 0) {
                 Map(
                     position: $cameraPosition
                 ) {
@@ -28,20 +29,42 @@ struct ContentView: View {
                             .rotationEffect(.degrees(200))
                     }
                     .annotationTitles(.hidden)
+
+                    MapPolyline(coordinates: CLLocationCoordinate2D.airports, contourStyle: .geodesic)
+                        .stroke(Color.orange, lineWidth: 2.5)
                 }
                 FlightInformationsView()
-                .padding()
-                .background(.thinMaterial)
+                    .padding()
+                    .background(.thinMaterial)
             }
         }
-        .ignoresSafeArea()
+        .onAppear {
+            averageLocationBetweenTwoAirports()
+        }
+    }
+
+    private func averageLocationBetweenTwoAirports() {
+        let centerCoordinate = calculAverageLocationBetweenTwoAirports()
+
+        cameraPosition = .camera(
+            MapCamera(
+                centerCoordinate: centerCoordinate,
+                distance: 19059990
+            )
+        )
+    }
+
+    private func calculAverageLocationBetweenTwoAirports() -> CLLocationCoordinate2D {
+        let orlyAirport = CLLocationCoordinate2D.orlyAirport
+        let newarkAirport = CLLocationCoordinate2D.newarkAirport
+
+        let avgLatitude = (orlyAirport.latitude + newarkAirport.latitude) / 2
+        let avgLongitude = (orlyAirport.longitude + newarkAirport.longitude) / 2
+
+        return CLLocationCoordinate2D(latitude: avgLatitude, longitude: avgLongitude)
     }
 }
 
 #Preview {
     ContentView()
-}
-
-extension CLLocationCoordinate2D {
-    static let orlyAirport = CLLocationCoordinate2D(latitude: 48.7262433, longitude: 2.365247199999999)
 }
