@@ -44,9 +44,12 @@ struct ContentView: View {
     }
 
     private func averageLocationBetweenTwoAirports() {
-        let centerCoordinate = calculAverageLocationBetweenTwoAirports()
+        let firstAirport = CLLocationCoordinate2D.orlyAirport
+        let secondAirport = CLLocationCoordinate2D.newarkAirport
 
-        let distanceBetweenAirports = distanceBetweenCoordinates()
+        let centerCoordinate = calculAverageLocationBetweenTwoAirports(firstAirport, secondAirport)
+
+        let distanceBetweenAirports = distanceBetweenCoordinates(firstAirport, secondAirport)
 
         // Multiplier la distance entre les aéroports par un facteur pour la vue de la caméra
         let cameraDistance = distanceBetweenAirports * 2.3
@@ -58,22 +61,23 @@ struct ContentView: View {
         )
     }
 
-    private func calculAverageLocationBetweenTwoAirports() -> CLLocationCoordinate2D {
-        let orlyAirport = CLLocationCoordinate2D.orlyAirport
-        let newarkAirport = CLLocationCoordinate2D.newarkAirport
+    private func calculAverageLocationBetweenTwoAirports(
+       _ firstAirPort: CLLocationCoordinate2D,
+       _ secondAirport: CLLocationCoordinate2D
+    ) -> CLLocationCoordinate2D {
 
-        let avgLatitude = (orlyAirport.latitude + newarkAirport.latitude) / 2
-        let avgLongitude = (orlyAirport.longitude + newarkAirport.longitude) / 2
+        let avgLatitude = (firstAirPort.latitude + secondAirport.latitude) / 2
+        let avgLongitude = (firstAirPort.longitude + secondAirport.longitude) / 2
 
         return CLLocationCoordinate2D(latitude: avgLatitude, longitude: avgLongitude)
     }
 
-    private func distanceBetweenCoordinates() -> CLLocationDistance {
-        let orlyAirport = CLLocationCoordinate2D.orlyAirport
-        let newarkAirport = CLLocationCoordinate2D.newarkAirport
-
-        let location1 = CLLocation(latitude: orlyAirport.latitude, longitude: orlyAirport.longitude)
-        let location2 = CLLocation(latitude: newarkAirport.latitude, longitude: newarkAirport.longitude)
+    private func distanceBetweenCoordinates(
+       _ firstAirPort: CLLocationCoordinate2D,
+       _ secondAirport: CLLocationCoordinate2D
+    ) -> CLLocationDistance {
+        let location1 = CLLocation(latitude: firstAirPort.latitude, longitude: firstAirPort.longitude)
+        let location2 = CLLocation(latitude: secondAirport.latitude, longitude: secondAirport.longitude)
 
         return location1.distance(from: location2)
     }
