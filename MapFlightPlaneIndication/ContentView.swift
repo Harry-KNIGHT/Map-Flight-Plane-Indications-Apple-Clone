@@ -39,20 +39,21 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            setupCameraPosition(
+            setupMapCameraPosition(
                 CLLocationCoordinate2D.orlyAirport,
                 CLLocationCoordinate2D.newarkAirport
             )
         }
     }
 
-    private func setupCameraPosition(
+    // MARK: Private properties
+
+    private func setupMapCameraPosition(
         _ firstAirport: CLLocationCoordinate2D,
         _ secondAirport: CLLocationCoordinate2D
     ) {
-        let centerCoordinate = calculAverageLocationBetweenTwoAirports(firstAirport, secondAirport)
-
-        let distanceBetweenAirports = distanceBetweenCoordinates(firstAirport, secondAirport)
+        let centerCoordinate = centerCoordinateBetweenAirports(firstAirport, secondAirport)
+        let distanceBetweenAirports = distanceBetweenAirports(firstAirport, secondAirport)
 
         // Multiplier la distance entre les aéroports par un facteur pour la vue de la caméra
         let cameraDistance = distanceBetweenAirports * 2.3
@@ -64,18 +65,17 @@ struct ContentView: View {
         )
     }
 
-    private func calculAverageLocationBetweenTwoAirports(
+    private func centerCoordinateBetweenAirports(
        _ firstAirPort: CLLocationCoordinate2D,
        _ secondAirport: CLLocationCoordinate2D
     ) -> CLLocationCoordinate2D {
-
         let avgLatitude = (firstAirPort.latitude + secondAirport.latitude) / 2
         let avgLongitude = (firstAirPort.longitude + secondAirport.longitude) / 2
 
         return CLLocationCoordinate2D(latitude: avgLatitude, longitude: avgLongitude)
     }
 
-    private func distanceBetweenCoordinates(
+    private func distanceBetweenAirports(
        _ firstAirport: CLLocationCoordinate2D,
        _ secondAirport: CLLocationCoordinate2D
     ) -> CLLocationDistance {
@@ -84,8 +84,6 @@ struct ContentView: View {
 
         return location1.distance(from: location2)
     }
-
-
 }
 
 #Preview {
