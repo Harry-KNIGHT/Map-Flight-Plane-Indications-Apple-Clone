@@ -13,7 +13,7 @@ struct ContentView: View {
         MapCamera(
             centerCoordinate: .init(latitude: 22.176310, longitude:-41.176251),
             distance: .infinity
-            )
+        )
     )
 
 
