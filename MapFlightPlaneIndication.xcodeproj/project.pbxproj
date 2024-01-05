@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C0142782B47AC0C0072B622 /* Airport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0142772B47AC0C0072B622 /* Airport.swift */; };
 		3C60EE7F2B434906008E3E1C /* MapFlightPlaneIndicationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C60EE7E2B434906008E3E1C /* MapFlightPlaneIndicationApp.swift */; };
 		3C60EE812B434906008E3E1C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C60EE802B434906008E3E1C /* ContentView.swift */; };
 		3C60EE832B434907008E3E1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C60EE822B434907008E3E1C /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C0142772B47AC0C0072B622 /* Airport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airport.swift; sourceTree = "<group>"; };
 		3C60EE7B2B434906008E3E1C /* MapFlightPlaneIndication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapFlightPlaneIndication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C60EE7E2B434906008E3E1C /* MapFlightPlaneIndicationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFlightPlaneIndicationApp.swift; sourceTree = "<group>"; };
 		3C60EE802B434906008E3E1C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				3C60EE7E2B434906008E3E1C /* MapFlightPlaneIndicationApp.swift */,
 				3C60EE802B434906008E3E1C /* ContentView.swift */,
+				3C0142772B47AC0C0072B622 /* Airport.swift */,
 				3C9984632B44A0A60033D922 /* Extension+CLLocation2D.swift */,
 				3C60EE8C2B435537008E3E1C /* FlightInformationsView.swift */,
 				3C60EE822B434907008E3E1C /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C0142782B47AC0C0072B622 /* Airport.swift in Sources */,
 				3C60EE8D2B435537008E3E1C /* FlightInformationsView.swift in Sources */,
 				3C9984642B44A0A60033D922 /* Extension+CLLocation2D.swift in Sources */,
 				3C60EE812B434906008E3E1C /* ContentView.swift in Sources */,

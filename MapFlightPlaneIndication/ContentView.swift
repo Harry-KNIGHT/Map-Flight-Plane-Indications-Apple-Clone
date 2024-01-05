@@ -22,26 +22,28 @@ struct ContentView: View {
                     }
                     .annotationTitles(.hidden)
 
-                    MapPolyline(coordinates: CLLocationCoordinate2D.airports, contourStyle: .geodesic)
+                    MapPolyline(coordinates: [departureAirport, arrivalAirport], contourStyle: .geodesic)
                         .stroke(Color.orange, lineWidth: 2.5)
                 }
 
-                HStack {
-                    Picker("Airport departure", selection: $departureAirport) {
-                        Text("Orly")
-                            .tag(CLLocationCoordinate2D.orlyAirport)
-                        Text("Newark")
-                            .tag(CLLocationCoordinate2D.newarkAirport)
-                    }
-                    Spacer()
-                    Picker("Airport arrival", selection: $arrivalAirport) {
-                        Text("Orly")
-                            .tag(CLLocationCoordinate2D.orlyAirport)
-                        Text("Newark")
-                            .tag(CLLocationCoordinate2D.newarkAirport)
-                    }
+                VStack {
+                    DestinationPickerView(
+                        title: "Departure",
+                        selection: $departureAirport
+                    )
+
+                    Rectangle()
+                        .foregroundStyle(.secondary)
+                        .opacity(0.5)
+                        .frame(height: 2)
+
+                    DestinationPickerView(
+                        title: "Arrival",
+                        selection: $arrivalAirport
+                    )
+
                 }
-                .padding()
+                .padding(8)
             }
         }
     }
@@ -49,4 +51,23 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+private struct DestinationPickerView: View {
+    let title: String
+    @Binding var selection: CLLocationCoordinate2D
+    var body: some View {
+        HStack {
+            Text("Departure")
+                .font(.title3)
+            Spacer()
+            Picker("Airport \(title)", selection: $selection) {
+                ForEach(Airport.airportsSample) { airport in
+                    Text(airport.name)
+                        .tag(airport.coordinate)
+                }
+            }
+            .tint(.white)
+        }
+    }
 }
