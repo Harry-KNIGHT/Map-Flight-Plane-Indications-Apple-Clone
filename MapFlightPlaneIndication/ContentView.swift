@@ -25,6 +25,8 @@ struct ContentView: View {
                     MapPolyline(coordinates: [departureAirport, arrivalAirport], contourStyle: .geodesic)
                         .stroke(Color.orange, lineWidth: 2.5)
                 }
+                .animation(.default, value: departureAirport)
+                .animation(.default, value: arrivalAirport)
 
                 VStack {
                     DestinationPickerView(
@@ -62,7 +64,7 @@ private struct DestinationPickerView: View {
     @Binding var selection: CLLocationCoordinate2D
     var body: some View {
         HStack {
-            Text("Departure")
+            Text(title)
                 .font(.title3)
             Spacer()
             Picker("Airport \(title)", selection: $selection) {
