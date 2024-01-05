@@ -9,62 +9,71 @@ import SwiftUI
 import MapKit
 
 struct ContentView: View {
-    @State private var cameraPosition: MapCameraPosition = .camera(
-        MapCamera(
-            centerCoordinate: .init(latitude: 22.176310, longitude:-41.176251),
-            distance: .infinity
-            )
-    )
-
-
+    @State private var departureAirport: CLLocationCoordinate2D = .orlyAirport
+    @State private var arrivalAirport: CLLocationCoordinate2D = .newarkAirport
     var body: some View {
         NavigationStack {
             VStack(alignment: .center, spacing: 0) {
-                Map(
-                    position: $cameraPosition
-                ) {
-                    Annotation("Orly airport", coordinate: .orlyAirport) {
+                Map {
+                    Annotation("Orly airport", coordinate: departureAirport) {
                         Image(systemName: "airplane")
                             .font(.system(size: 20))
                             .rotationEffect(.degrees(200))
                     }
                     .annotationTitles(.hidden)
 
-                    MapPolyline(coordinates: CLLocationCoordinate2D.airports, contourStyle: .geodesic)
+                    MapPolyline(coordinates: [departureAirport, arrivalAirport], contourStyle: .geodesic)
                         .stroke(Color.orange, lineWidth: 2.5)
                 }
-                FlightInformationsView()
-                    .padding()
-                    .background(.thinMaterial)
+                .animation(.default, value: departureAirport)
+                .animation(.default, value: arrivalAirport)
+
+                VStack {
+                    DestinationPickerView(
+                        title: "Departure",
+                        selection: $departureAirport
+                    )
+
+                    Rectangle()
+                        .foregroundStyle(.secondary)
+                        .opacity(0.5)
+                        .frame(height: 1)
+
+                    DestinationPickerView(
+                        title: "Arrival",
+                        selection: $arrivalAirport
+                    )
+
+                }
+                .padding(8)
             }
         }
-        .onAppear {
-            averageLocationBetweenTwoAirports()
-        }
-    }
-
-    private func averageLocationBetweenTwoAirports() {
-        let centerCoordinate = calculAverageLocationBetweenTwoAirports()
-
-        cameraPosition = .camera(
-            MapCamera(
-                centerCoordinate: centerCoordinate,
-                distance: 19059990
-            )
-        )
-    }
-
-    private func calculAverageLocationBetweenTwoAirports() -> CLLocationCoordinate2D {
-        let orlyAirport = CLLocationCoordinate2D.orlyAirport
-        let newarkAirport = CLLocationCoordinate2D.newarkAirport
-
-        let avgLatitude = (orlyAirport.latitude + newarkAirport.latitude) / 2
-        let avgLongitude = (orlyAirport.longitude + newarkAirport.longitude) / 2
-
-        return CLLocationCoordinate2D(latitude: avgLatitude, longitude: avgLongitude)
     }
 }
 
+// MARK: Preview
+
 #Preview {
     ContentView()
+}
+
+// MARK: - Extracted Views
+
+private struct DestinationPickerView: View {
+    let title: String
+    @Binding var selection: CLLocationCoordinate2D
+    var body: some View {
+        HStack {
+            Text(title)
+                .font(.title3)
+            Spacer()
+            Picker("Airport \(title)", selection: $selection) {
+                ForEach(Airport.airportsSample) { airport in
+                    Text(airport.name)
+                        .tag(airport.coordinate)
+                }
+            }
+            .tint(.white)
+        }
+    }
 }
