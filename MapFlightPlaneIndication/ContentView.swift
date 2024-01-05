@@ -35,7 +35,7 @@ struct ContentView: View {
                     Rectangle()
                         .foregroundStyle(.secondary)
                         .opacity(0.5)
-                        .frame(height: 2)
+                        .frame(height: 1)
 
                     DestinationPickerView(
                         title: "Arrival",
@@ -49,9 +49,13 @@ struct ContentView: View {
     }
 }
 
+// MARK: Preview
+
 #Preview {
     ContentView()
 }
+
+// MARK: - Extracted Views
 
 private struct DestinationPickerView: View {
     let title: String
