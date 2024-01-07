@@ -73,7 +73,6 @@ private struct DestinationPickerView: View {
                         .tag(airport.coordinate)
                 }
             }
-            .tint(.white)
         }
     }
 }
